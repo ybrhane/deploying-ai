@@ -3,7 +3,7 @@ name = "deploying-ai-env"
 version = "0.1.0"
 description = "Package dependencies for the course Deploying AI taught at the Data Sciences Institute of the University of Toronto."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
     "agentops>=0.4.21",
     "autogen>=0.9.9",
@@ -41,4 +41,15 @@ dependencies = [
     "psycopg2>=2.9.11",
     "fastmcp>=2.12.5",
     "pypdf>=6.1.1",
+]
+
+[tool.uv]
+required-environments = [
+  "sys_platform == 'darwin' and platform_machine == 'arm64'"
+]
+constraint-dependencies = ["transformers!=4.57.0"]
+override-dependencies = [
+  "onnxruntime==1.16.3",   # cp311 + macosx_11_0_arm64 (works on macOS 12)
+  "chromadb==1.1.1",       # aligns with ORT 1.16.x
+  "av==13.1.0"             # avoid building PyAV from source
 ]
